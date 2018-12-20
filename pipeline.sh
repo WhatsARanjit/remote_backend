@@ -20,12 +20,16 @@ terraform {
 }
 EOF
 
+# Init fails because there is no default workspace yet
 ./terraform init \
-  -backend-config="organization=${TFE_ORG}"
+  -backend-config="organization=${TFE_ORG}" || \
+true
 ./terraform validate
 
 if [[ $TRAVIS_BRANCH == 'master' ]]
 then
-  ./terraform workspace select prod
+  # Create workspace if it doesn't exist
+  ./terraform workspace select prod || \
+  ./terraform workspace new  prod
   ./terraform apply -auto-approve
 fi
