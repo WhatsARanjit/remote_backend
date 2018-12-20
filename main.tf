@@ -8,7 +8,7 @@ resource "random_id" "random" {
 }
 
 # Dummy resource with attributes
-resource "null_resource" "Bret" {
+resource "null_resource" "test" {
   provisioner "local-exec" {
     command = "echo '${random_id.random.dec}'"
   }
