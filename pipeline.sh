@@ -20,7 +20,8 @@ terraform {
 }
 EOF
 
-./terraform init
+./terraform init \
+  -backend-config="organization=${TFE_ORG}"
 ./terraform validate
 
 if [[ $TRAVIS_BRANCH == 'master' ]]
