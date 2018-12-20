@@ -31,9 +31,10 @@ true
 ./terraform workspace select prod || \
 ./terraform workspace new prod
 
-# Validate code
-./terraform validate
+# Plan
+./terraform plan
 
+# Apply only on master
 if [[ $TRAVIS_BRANCH == 'master' ]]
 then
   ./terraform apply -auto-approve
