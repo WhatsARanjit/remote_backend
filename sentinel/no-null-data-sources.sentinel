@@ -1,0 +1,22 @@
+import "tfplan"
+
+# Get all null data sources from all modules
+get_null_data_sources = func() {
+    sources = []
+    for tfplan.module_paths as path {
+        sources += values(tfplan.module(path).data.null_data_source) else []
+    }
+    return sources
+}
+
+null_data_sources = get_null_data_sources()
+
+# Rule to restrict usage of null data sources
+no_nds = rule {
+  length(null_data_sources) < 1
+}
+
+# Main rule that requires other rules to be true
+main = rule {
+  no_nds else true
+}
