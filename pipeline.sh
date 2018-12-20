@@ -10,11 +10,12 @@ credentials "app.terraform.io" {
 }
 EOF
 
+WORKSPACE_NAME=$(echo $TRAVIS_REPO_SLUG | sed 's%/%-%g')
 cat << EOF > workspace.tf
 terraform {
   backend "remote" {
     workspaces {
-     prefix = "${TRAVIS_REPO_SLUG}-"
+     prefix = "${WORKSPACE_NAME}-"
     }
   }
 }
