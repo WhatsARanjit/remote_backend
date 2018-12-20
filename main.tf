@@ -18,3 +18,13 @@ resource "null_resource" "test" {
 output "random_number" {
   value = "${random_id.random.dec}"
 }
+
+resource "aws_s3_bucket" "clever_idea" {
+  bucket = "catch_me"
+  acl    = "private"
+
+  tags {
+    Name        = "My bucket"
+    Environment = "Dev"
+  }
+}
