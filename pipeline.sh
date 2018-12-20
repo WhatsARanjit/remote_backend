@@ -24,12 +24,16 @@ EOF
 ./terraform init \
   -backend-config="organization=${TFE_ORG}" || \
 true
+
+
+# Create workspace if it doesn't exist
+./terraform workspace select prod || \
+./terraform workspace new prod
+
+# Validate code
 ./terraform validate
 
 if [[ $TRAVIS_BRANCH == 'master' ]]
 then
-  # Create workspace if it doesn't exist
-  ./terraform workspace select prod || \
-  ./terraform workspace new  prod
   ./terraform apply -auto-approve
 fi
