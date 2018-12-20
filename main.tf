@@ -19,6 +19,10 @@ output "random_number" {
   value = "${random_id.random.dec}"
 }
 
+provider "aws" {
+  region = "us-east-1"
+}
+
 resource "aws_s3_bucket" "clever_idea" {
   bucket = "catch_me"
   acl    = "private"
