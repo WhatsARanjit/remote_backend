@@ -3,7 +3,6 @@ resource "random_id" "random" {
   keepers {
     uuid = "${uuid()}"
   }
-
   byte_length = 8
 }
 
@@ -17,4 +16,11 @@ resource "null_resource" "test" {
 # Output random number
 output "random_number" {
   value = "${random_id.random.dec}"
+}
+
+# Dummy data source
+data "null_data_source" "test" {
+  inputs = {
+    hex = "${random_id.random.hex}"
+  }
 }
