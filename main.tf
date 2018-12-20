@@ -3,7 +3,6 @@ resource "random_id" "random" {
   keepers {
     uuid = "${uuid()}"
   }
-
   byte_length = 8
 }
 
@@ -19,16 +18,9 @@ output "random_number" {
   value = "${random_id.random.dec}"
 }
 
-provider "aws" {
-  region = "us-east-1"
-}
-
-resource "aws_s3_bucket" "clever_idea" {
-  bucket = "catch_me"
-  acl    = "private"
-
-  tags {
-    Name        = "My bucket"
-    Environment = "Dev"
+# Dummy data source
+data "null_data_source" "test" {
+  inputs = {
+    hex = "${random_id.random.hex}"
   }
 }

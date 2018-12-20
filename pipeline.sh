@@ -14,6 +14,7 @@ WORKSPACE_NAME=$(echo $TRAVIS_REPO_SLUG | sed 's%/%-%g')
 cat << EOF > workspace.tf
 terraform {
   backend "remote" {
+    organization = "${TFE_ORG}"
     workspaces {
      prefix = "${WORKSPACE_NAME}-"
     }
@@ -22,20 +23,18 @@ terraform {
 EOF
 
 # Init fails because there is no default workspace yet
-./terraform init \
-  -backend-config="organization=${TFE_ORG}" || \
-true
+./terraform init || true
 
 
 # Create workspace if it doesn't exist
-./terraform workspace select prod || \
-./terraform workspace new prod
+./terraform workspace select $TRAVIS_BRANCH || \
+./terraform workspace new $TRAVIS_BRANCH
 
 # Plan
-./terraform plan
+./terraform plan || exit 1
 
 # Apply only on master
 if [[ $TRAVIS_BRANCH == 'master' ]]
 then
-  ./terraform apply -auto-approve
+  ./terraform apply -auto-approve || exit 1
 fi
