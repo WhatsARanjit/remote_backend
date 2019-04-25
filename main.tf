@@ -25,3 +25,9 @@ data "null_data_source" "test" {
     hex = "${random_id.random.hex}"
   }
 }
+
+data "null_data_source" "test2" {
+  inputs = {
+    hex = "${random_id.random.hex}"
+  }
+}
