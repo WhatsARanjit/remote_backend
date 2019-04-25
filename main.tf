@@ -20,14 +20,8 @@ output "random_number" {
 }
 
 # Dummy data source
-data "null_data_source" "test" {
-  inputs = {
-    hex = "${random_id.random.hex}"
-  }
-}
-
-data "null_data_source" "test2" {
-  inputs = {
-    hex = "${random_id.random.hex}"
-  }
-}
+#data "null_data_source" "test" {
+#  inputs = {
+#    hex = "${random_id.random.hex}"
+#  }
+#}
